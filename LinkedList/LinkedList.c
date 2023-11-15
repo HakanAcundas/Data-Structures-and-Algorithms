@@ -6,17 +6,21 @@ struct Node
    int data;
    struct Node* next;
 };
-struct Node* head;
 
-void Insert(int x)
+void Insert(struct Node** headPointer, int value)
 {
    struct Node* temp = (struct Node*)malloc(sizeof(struct Node));
-   temp->data = x;
-   temp->next = head;
-   head = temp;
+   temp->data = value;
+   temp->next = NULL;
+
+   if (*headPointer != NULL)
+   {
+      temp->next = *headPointer;
+   }
+   *headPointer = temp;
 }
 
-void Print()
+void Print(struct Node* head)
 {
    struct Node* temp = head;
    while (temp != NULL)
@@ -27,7 +31,7 @@ void Print()
    printf("\n");
 }
 
-int Size()
+int Size(struct Node* head)
 {
    int size = 0;
    struct Node* temp = head;
@@ -40,13 +44,14 @@ int Size()
 }
 
 int main() {
-   Insert(5);
-   Insert(1);
-   Insert(-2);
-   Insert(111);
-   Insert(100);
-   Print();
-   printf("Size of LinkedList is: %d", Size());
+   struct Node* myHead = NULL;
+   Insert(&myHead, 5);
+   Insert(&myHead, 1);
+   Insert(&myHead, -2);
+   Insert(&myHead, 111);
+   Insert(&myHead, 100);
+   Print(myHead);
+   printf("Size of LinkedList is: %d", Size(myHead));
 
    return 0;
 }
