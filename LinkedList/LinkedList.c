@@ -7,6 +7,7 @@ struct Node
    struct Node* next;
 };
 
+// Insertion at the begining O(1)
 void InsertAtBegining(struct Node** headPointer, int value)
 {
    struct Node* temp = (struct Node*)malloc(sizeof(struct Node));
