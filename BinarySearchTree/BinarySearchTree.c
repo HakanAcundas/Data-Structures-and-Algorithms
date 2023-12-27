@@ -102,7 +102,6 @@ GetHeight(struct Node* root)
     }
     else
     {
-        printf("ERROR: Tree is empty!!!\n");
         return -1;
     }
 }
