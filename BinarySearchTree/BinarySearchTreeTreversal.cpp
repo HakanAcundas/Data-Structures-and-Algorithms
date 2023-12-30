@@ -54,6 +54,7 @@ bool Search(Node<T>* root, T value)
     {
         Search(root->right, value);
     }
+    return false;
 }
 
 template <typename T>
