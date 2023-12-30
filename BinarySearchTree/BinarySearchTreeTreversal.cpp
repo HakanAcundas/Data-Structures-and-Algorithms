@@ -1,27 +1,74 @@
 #include <iostream>
 #include <queue>
 
+// BinarySearchTree
+template <typename T>
 struct Node
 {
-    char data;
-    Node *left;
-    Node *right;
+    T data;
+    Node* left;
+    Node* right;
+
+    Node() : data(T()), left(nullptr), right(nullptr) {}
+    Node(const T& value) : data(value), left(nullptr), right(nullptr) {}
 };
 
-// TODO: Implement Insert, Pop etc for node struct
+template <typename T>
+Node<T>* Insert(Node<T>* root, T value)
+{
+    if (root == nullptr) 
+    {   
+        root = new Node<T>;
+        root->data = value;
+        root->left = NULL;
+        root->right = NULL;
+    }
+    else if (value <= root->data)
+    {
+        root->left = Insert(root->left, value);
+    }
+    else
+    {
+        root->right = Insert(root->right, value);
+    }
 
-void BreadthFirstSearch(Node* root)
+    return root;
+}
+
+template <typename T>
+bool Search(Node<T>* root, T value)
+{
+    if (root == nullptr)
+    {
+        return false;
+    }
+    else if (value == root->data)
+    {
+        return true;
+    }
+    else if (value <= root->data)
+    {
+        Search(root->left, value);
+    }
+    else 
+    {
+        Search(root->right, value);
+    }
+}
+
+template <typename T>
+void BreadthFirstSearch(Node<T>* root)
 {
     if (root == NULL)
     {
         return;
     }
-    std::queue<Node*> q;
+    std::queue<Node<T>*> q;
     q.push(root);
 
     while(!q.empty())
     {
-        Node* current = q.front();
+        Node<T>* current = q.front();
         std::cout<< current->data << " ";
 
          // Add children of current Node to queue
@@ -36,11 +83,13 @@ void BreadthFirstSearch(Node* root)
         // Remove current Node from queue
         q.pop();
     }
+    std::cout << "\n";
 }
 
-void DepthFirstSearch(Node* root)
+template <typename T>
+void DepthFirstSearch(Node<T>* root)
 {
-    if (root == NULL)
+    if (root == nullptr)
     {
         return;
     }
@@ -51,5 +100,16 @@ void DepthFirstSearch(Node* root)
 
 int main()
 {
+    Node<int>* root = nullptr;
+    root = Insert(root, 3);
+    std::cout << Search(root, 5) << "\n";
+    std::cout << Search(root, 3) << "\n";
+
+    root = Insert(root, -1);
+    root = Insert(root, 5);
+    root = Insert(root, 8);
+    root = Insert(root, -2);
+    BreadthFirstSearch(root);
+    DepthFirstSearch(root);
     return 0;
 }
