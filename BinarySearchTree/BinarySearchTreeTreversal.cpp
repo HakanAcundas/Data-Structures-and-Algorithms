@@ -60,7 +60,7 @@ bool Search(Node<T>* root, T value)
 template <typename T>
 void BreadthFirstSearch(Node<T>* root)
 {
-    if (root == NULL)
+    if (root == nullptr)
     {
         return;
     }
