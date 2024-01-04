@@ -1,5 +1,6 @@
 #include <iostream>
 #include <queue>
+#include <math.h>
 
 // BinarySearchTree
 template <typename T>
@@ -99,18 +100,72 @@ void DepthFirstSearch(Node<T>* root)
     DepthFirstSearch(root->right);
 }
 
+template <typename T>
+T Max(Node<T>* root)
+{
+    int max;
+    if (root == nullptr)
+    {
+        std::cout << "ERROR: Empty tree!!!\n";
+    }
+    Node<T> current = *root;
+    while (current.right != NULL)
+    {
+        current = *current.right;
+    }
+
+    return current.data;
+}
+
+template <typename T>
+T Min(Node<T>* root)
+{
+    int max;
+    if (root == nullptr)
+    {
+        std::cout << "ERROR: Empty tree!!!\n";
+    }
+    Node<T> current = *root;
+    while (current.left != NULL)
+    {
+        current = *current.left;
+    }
+
+    return current.data;
+}
+
+template <typename T>
+int FindTreeHeight(Node<T>* root)
+{
+    if (root == nullptr)
+    {
+        return -1;
+    }
+    int leftHeight = FindTreeHeight(root->left);
+    int rightHeight = FindTreeHeight(root->right);
+
+    return std::max(leftHeight, rightHeight) + 1;
+}
+
 int main()
 {
-    Node<int>* root = nullptr;
-    root = Insert(root, 3);
-    std::cout << Search(root, 5) << "\n";
-    std::cout << Search(root, 3) << "\n";
+    Node<int> root;
+    Insert(&root, 3);
+    std::cout << Search(&root, 5) << "\n";
+    std::cout << Search(&root, 3) << "\n";
 
-    root = Insert(root, -1);
-    root = Insert(root, 5);
-    root = Insert(root, 8);
-    root = Insert(root, -2);
-    BreadthFirstSearch(root);
-    DepthFirstSearch(root);
+    Insert(&root, -1);
+    Insert(&root, 5);
+    Insert(&root, 8);
+    Insert(&root, -2);
+    BreadthFirstSearch(&root);
+    DepthFirstSearch(&root);
+
+    Insert(&root, 101);
+    std::cout << "\n" << Max(&root) << "\n";
+    Insert(&root, -77);
+    std::cout << Min(&root) << "\n";
+
+    std::cout << FindTreeHeight(&root) << "\n";
     return 0;
 }
