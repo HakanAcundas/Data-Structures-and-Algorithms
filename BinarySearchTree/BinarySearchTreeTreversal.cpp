@@ -2,6 +2,10 @@
 #include <queue>
 #include <math.h>
 
+// Tree Traversal is a process of visiting each node in the tree 
+// exactly once in some order. 
+//Options for traversel: Breadth-first or Depth-first search 
+
 // BinarySearchTree
 template <typename T>
 struct Node
@@ -31,6 +35,45 @@ Node<T>* Insert(Node<T>* root, T value)
     else
     {
         root->right = Insert(root->right, value);
+    }
+
+    return root;
+}
+
+template <typename T>
+Node<T>* Delete(Node<T>* root, int data)
+{
+    if (root == nullptr)
+        return root;
+    else if (data < root->data)
+        root->left = Delete(root->left, data);
+    else if (data > root->data)
+        root->right = Delete(root->right, data);
+    else
+    {
+        if (root->left == nullptr && root->right == nullptr)
+        {
+            delete root;
+            root = nullptr;
+        }
+        else if (root->left == nullptr)
+        {
+            Node<T>* temp = root;
+            root = root->right;
+            delete temp;
+        }
+        else if (root->right == nullptr)
+        {
+            Node<T>* temp = root;
+            root = root->left;
+            delete temp;
+        }
+        else
+        {
+            Node<T>* temp = FindMin(root->right);
+            root->data = temp->data;
+            root->right = Delete(root->right, temp->data);
+        }
     }
 
     return root;
@@ -103,7 +146,6 @@ void DepthFirstSearch(Node<T>* root)
 template <typename T>
 T Max(Node<T>* root)
 {
-    int max;
     if (root == nullptr)
     {
         std::cout << "ERROR: Empty tree!!!\n";
@@ -120,18 +162,49 @@ T Max(Node<T>* root)
 template <typename T>
 T Min(Node<T>* root)
 {
-    int max;
     if (root == nullptr)
     {
         std::cout << "ERROR: Empty tree!!!\n";
     }
     Node<T> current = *root;
-    while (current.left != NULL)
+    while (current.left != nullptr)
     {
         current = *current.left;
     }
 
     return current.data;
+}
+
+template <typename T>
+Node<T>* FindMax(Node<T>* root)
+{
+    if (root == nullptr)
+    {
+        std::cout << "ERROR: Empty tree!!!\n";
+    }
+    Node<T>* current = root;
+    while (current->right != nullptr)
+    {
+        current = current->right;
+    }
+
+    return current;
+}
+
+template <typename T>
+Node<T>* FindMin(Node<T>* root)
+{
+    if (root == nullptr)
+    {
+        std::cout << "ERROR: Empty tree!!!\n";
+    }
+    Node<T>* current = root;
+    while (current->left != nullptr)
+    {
+        current = current->left;
+    }
+
+    return current;
 }
 
 template <typename T>
@@ -167,5 +240,9 @@ int main()
     std::cout << Min(&root) << "\n";
 
     std::cout << FindTreeHeight(&root) << "\n";
+
+
+    Delete(&root, 5);
+    BreadthFirstSearch(&root);
     return 0;
 }
