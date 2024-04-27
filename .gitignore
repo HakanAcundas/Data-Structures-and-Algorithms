@@ -1,0 +1,14 @@
+# Ignore JSON files
+*.json
+
+# Ignore .pdb files
+*.pdb
+
+# Ignore .obj files
+*.obj
+
+# Ignore .obj files
+*.exe
+
+# Ignore .obj files
+*.ilk
