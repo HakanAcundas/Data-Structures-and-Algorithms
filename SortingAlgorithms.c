@@ -148,8 +148,8 @@ void merge(int arr[], int p, int q, int n)
 }
 
 /**
- * The MergeSort function repeatedly divides the array into two halves until we reach a stage where we try to 
- * perform MergeSort on a subarray of size 1.
+ * The MergeSort Algorithm repeatedly divides the array into two halves until we reach a stage 
+ * where we try to perform MergeSort on a subarray of size 1.
  * BigO: O(n*log n)
  * Average: O(n*log n)
  * Space Complexity: O(n)
